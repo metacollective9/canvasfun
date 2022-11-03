@@ -1,0 +1,22 @@
+<html>
+  <head> </head>
+  <body>
+    <p>Testing CORS API</p>
+    <script type="text/javascript">
+      var apiUrl =
+        "https://d3owavb6pntfxw.cloudfront.net/fit-in/100x700/canvasfun/documentation.png";
+      fetch(apiUrl, {
+    method: "GET"
+   })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          console.log("data ", data);
+        })
+        .catch((err) => {
+          console.log("error ", err);
+        });
+    </script>
+  </body>
+</html>
