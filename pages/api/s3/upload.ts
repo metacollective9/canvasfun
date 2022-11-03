@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from "next";
 import S3 from "aws-sdk/clients/s3";
 
 const s3 = new S3({
-  region: "eu-west-1",
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWSDEFAULTREGION,
+  accessKeyId: process.env.AWSACCESSKEYID,
+  secretAccessKey: process.env.AWSSECRETACCESSKEY,
   signatureVersion: "v4",
 });
 
