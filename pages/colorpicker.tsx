@@ -4,6 +4,8 @@ import Loading from "../components/loading";
 import fs from "fs";
 import matter from "gray-matter";
 import MD from "../components/md";
+import MCHEAD from "../components/head";
+import Head from "next/head";
 
 type Props = {
   readme?: any;
@@ -15,6 +17,8 @@ export default function ColorPicker({ readme }: Props) {
   const [uploadedFile, setUploadedFile] = useState<any>();
   const [colour, setColour] = useState<string>("");
   const [hexColour, setHexColour] = useState<string>("");
+  const title = "Color Picker";
+  const description = "Pick colour from an image";
   let canvas: HTMLCanvasElement;
   let data: Uint8ClampedArray;
 
@@ -107,6 +111,7 @@ export default function ColorPicker({ readme }: Props) {
 
   return (
     <>
+      <MCHEAD title={title} description={description} />
       <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
         <div className="flex flex-col w-full lg:w-1/3 justify-center items-start pt-12 pb-12">
           <h1 className="uppercase tracking-loose">Color picker</h1>
