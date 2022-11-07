@@ -8,9 +8,9 @@ type Props = {
   title?: string;
 };
 
-export default function Layout({ children, title = "MC Toolkit" }: Props) {
+export default function Layout({ children, title = "Meta Collective Tools" }: Props) {
   return (
-    <div className="bg-slate-200 font-sans leading-normal tracking-normal">
+    <div className="bg-slate-100 font-Playfair leading-normal tracking-normal">
       <Head>
         <title>{title}</title>
         <meta name="description" content={title} />
@@ -20,7 +20,7 @@ export default function Layout({ children, title = "MC Toolkit" }: Props) {
         />
       </Head>
 
-      <main className="bg-slate-200 font-sans leading-normal tracking-normal">
+      <main className="bg-slate-100 font-Playfair leading-normal tracking-normal">
         <Navigation />
         {children}
       </main>

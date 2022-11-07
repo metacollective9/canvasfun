@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../components/loading";
-import Layout from "../components/layout";
+import fs from "fs";
+import matter from "gray-matter";
+import MD from "../components/md";
 
-export default function ColorPicker() {
+type Props = {
+  readme?: any;
+};
+
+export default function ColorPicker({ readme }: Props) {
   const [file, setFile] = useState<any>(null);
   const [uploadingStatus, setUploadingStatus] = useState<boolean>(false);
   const [uploadedFile, setUploadedFile] = useState<any>();
   const [colour, setColour] = useState<string>("");
   const [hexColour, setHexColour] = useState<string>("");
-
   let canvas: HTMLCanvasElement;
   let data: Uint8ClampedArray;
 
@@ -57,7 +62,6 @@ export default function ColorPicker() {
       canvas = document.getElementById("canvas") as HTMLCanvasElement;
       canvas.width = img.width;
       canvas.height = img.height;
-      //canvas.className = "w-full";
       let ctx: CanvasRenderingContext2D = canvas.getContext(
         "2d"
       ) as CanvasRenderingContext2D;
@@ -91,52 +95,79 @@ export default function ColorPicker() {
     //To get the exact pixel, the logic is to multiply total columns in this image with the row position of this pixel and then add the column position of this pixed
     let pixel = cols * x + y;
     //To get the array position in the entire image data array, simply multiply your pixel position by 4 (since each pixel will have its own r,g,b,a in that order)
-    let arrayPos = pixel * 4;
+    let position = pixel * 4;
     //the rgba value of current pixel will be the following
     return {
-      red: data[arrayPos],
-      green: data[arrayPos + 1],
-      blue: data[arrayPos + 2],
-      alpha: data[arrayPos + 3],
+      red: data[position],
+      green: data[position + 1],
+      blue: data[position + 2],
+      alpha: data[position + 3],
     };
   };
-    
-  return (
-    <Layout title="Color Picker">
 
-        <div className="container mx-auto flex flex-col md:flex-row items-center my-12 md:my-24">
-        <div className="flex flex-col w-full lg:w-1/3 justify-center items-start pt-12 pb-24 px-6">
-            <p className="uppercase tracking-loose">Color picker</p>
-            <h1 className="font-bold text-3xl my-4">Pick exact color of a pixel</h1>
-            <p className="leading-normal mb-4">
-            Simply upload an image and pick color of each pixel
-            </p>
-            <input
+  return (
+    <>
+      <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
+        <div className="flex flex-col w-full lg:w-1/3 justify-center items-start pt-12 pb-12">
+          <h1 className="uppercase tracking-loose">Color picker</h1>
+          <h3 className="">Pick exact color of a pixel</h3>
+          <p className="leading-normal mb-4">
+            Simply upload an image and start picking
+          </p>
+          <input
             type="file"
             className="bg-transparent hover:bg-slate-900 text-gray-900 hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-gray-900 hover:border-transparent"
             accept="image/*"
             name="image"
             id="select-image"
             onChange={(e: any) => setFile(e.target.files[0])}
-            />
-            {colour.length > 0 && (
+          />
+          {colour.length > 0 && (
             <span
-                className="box-content mt-2 p-2 border-2"
-                style={{ backgroundColor: colour }}
+              className="box-content mt-2 p-2 border-2"
+              style={{ backgroundColor: colour }}
             >
-                <p>
+              <p>
                 {hexColour} <br />
                 HEX value of colour is copied in your clipboard
-                </p>
+              </p>
             </span>
-            )}
+          )}
         </div>
 
         <div className="w-full lg:w-2/3 lg:py-6 text-center">
-            {uploadingStatus && <Loading />}
-            {!uploadingStatus && <canvas id="canvas"></canvas>}
+          {uploadingStatus && <Loading />}
+          {!uploadingStatus && <canvas id="canvas"></canvas>}
         </div>
-          </div>
-    </Layout>      
+      </div>
+      <hr />
+      <div className="flex flex-col w-full justify-start items-start pt-12 pb-24">
+        <MD {...readme[0]} />
+      </div>
+    </>
   );
+}
+
+export async function getStaticProps() {
+  // get list of files from the posts folder
+  const files = fs.readdirSync("readme");
+
+  // get frontmatter & slug from each post
+  const readme = files.map((fileName) => {
+    const slug = fileName.replace(".md", "");
+    const readFile = fs.readFileSync(`readme/${fileName}`, "utf-8");
+    const { data: frontmatter, content } = matter(readFile);
+
+    return {
+      content,
+      frontmatter,
+    };
+  });
+
+  // Return the pages static props
+  return {
+    props: {
+      readme,
+    },
+  };
 }

@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 w-screen p-4 bg-white sm:p-6 dark:bg-gray-900">
-      <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+    <footer className="bottom-0 left-0 w-screen p-2 bg-slate-100 sm:p-6">
+      <hr className="border-gray-200 sm:mx-auto dark:border-gray-700 mb-4" />
       <div className="sm:flex sm:items-center sm:justify-between">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://medium.com/@metacollective/" className="hover:underline">MetaCollective™</a>. All Rights Reserved.
         </span>
