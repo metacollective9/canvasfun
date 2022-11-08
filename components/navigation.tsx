@@ -13,8 +13,8 @@ export default function Navigation() {
                 <img
                   src="https://cdn-images-1.medium.com/fit/c/64/64/1*dj1msIqe6GrX0RjsaTtm3A.png"
                   className="inline-block"
+                  alt="Meta Collective"
                 />
-              {/* Canvas Fun */}
             </span>
           </a>
         </div>

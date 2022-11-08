@@ -11,9 +11,10 @@ type Props = {
 
 export default function Layout({ children, title = "Meta Collective Tools", description= "Meta Collective Tools" }: Props) {
   return (
-    <div className="bg-slate-100 font-Playfair leading-normal tracking-normal">
+    <div className="bg-slate-100 font-Playfair leading-normal tracking-normal w-full">
       <Head>
         <title>{title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content={title} key="title" />
         <meta property="og:description" content={description} key="description" />
         <meta name="description" content={description} />

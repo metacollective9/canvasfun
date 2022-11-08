@@ -5,7 +5,6 @@ import fs from "fs";
 import matter from "gray-matter";
 import MD from "../components/md";
 import MCHEAD from "../components/head";
-import Head from "next/head";
 
 type Props = {
   readme?: any;
@@ -27,6 +26,7 @@ export default function ColorPicker({ readme }: Props) {
       const uploadedFileDetail = async () => await uploadFile();
       uploadedFileDetail();
     }
+
     navigator.clipboard.writeText(hexColour.toString());
   }, [file, hexColour]);
 
@@ -113,12 +113,15 @@ export default function ColorPicker({ readme }: Props) {
     <>
       <MCHEAD title={title} description={description} />
       <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
-        <div className="flex flex-col w-full lg:w-1/3 justify-center items-start pt-12 pb-12">
+        <div className="flex flex-col md:w-full lg:w-1/3 justify-center items-start pt-12 pb-12">
           <h1 className="uppercase tracking-loose">Color picker</h1>
           <h3 className="">Pick exact color of a pixel</h3>
           <p className="leading-normal mb-4">
             Simply upload an image and start picking
           </p>
+          <label htmlFor="image" className="invisible">
+            {" "}
+          </label>
           <input
             type="file"
             className="bg-transparent hover:bg-slate-900 text-gray-900 hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-gray-900 hover:border-transparent"
@@ -140,15 +143,18 @@ export default function ColorPicker({ readme }: Props) {
           )}
         </div>
 
-        <div className="w-full lg:w-2/3 lg:py-6 text-center">
+        <div className="md:w-full lg:w-2/3 lg:py-6 text-center">
           {uploadingStatus && <Loading />}
           {!uploadingStatus && <canvas id="canvas"></canvas>}
         </div>
       </div>
       <hr />
-      <div className="flex flex-col w-full justify-start items-start pt-12 pb-24">
+      <div className="container mx-auto pt-12 md:pt-2 px-6">
         <MD {...readme[0]} />
       </div>
+      {/* <div className="flex flex-col md:w-full justify-start items-start md:pt-12 md:pb-24 sm:pt-6">
+        <MD {...readme[0]} />
+      </div> */}
     </>
   );
 }
