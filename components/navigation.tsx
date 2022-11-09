@@ -7,7 +7,7 @@ export default function Navigation() {
         <div className="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
           <a
             className="text-gray-800 no-underline hover:text-black hover:no-underline"
-            href="#"
+            href="/"
           >
             <span className="text-2xl pl-2">
                 <img
@@ -24,6 +24,11 @@ export default function Navigation() {
             <li className="mr-3">
               <Link href="/colorpicker" className="inline-block py-2 px-4 text-black no-underline font-medium">
                 Color Picker
+              </Link>
+            </li>
+            <li className="mr-3">
+              <Link href="/posts" className="inline-block py-2 px-4 text-black no-underline font-medium">
+                Posts
               </Link>
             </li>
           </ul>
