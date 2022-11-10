@@ -2,7 +2,6 @@ import Head from "next/head";
 import Navigation from "../components/navigation";
 import Footer from "../components/footer";
 import { ReactNode } from "react";
-import Script from "next/script";
 
 type Props = {
   children?: ReactNode;
@@ -31,19 +30,6 @@ export default function Layout({
           rel="icon"
           href="https://cdn-images-1.medium.com/fit/c/64/64/1*dj1msIqe6GrX0RjsaTtm3A.png"
         />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-NPXKD38ZBV"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-NPXKD38ZBV');
-        `}
-        </Script>
       </Head>
 
       <main className="bg-slate-100 font-Playfair leading-normal tracking-normal">

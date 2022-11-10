@@ -17,10 +17,12 @@ export function POST({ ...post }: post) {
         <span className="text-sm">{post.readtime}</span>
       </div>
       <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        <a href="#">{post.title}</a>
+        <a href={post.url} target="_blank">{post.title}</a>
       </h2>
       <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
-        {post.description}
+        <a href={post.url} target="_blank">
+          {post.description}
+        </a>
       </p>
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-4">
