@@ -4,7 +4,7 @@ import Loading from "../components/loading";
 import fs from "fs";
 import matter from "gray-matter";
 import MD from "../components/md";
-import MCHEAD from "../components/head";
+import MCHead from "../components/head";
 
 type Props = {
   readme?: any;
@@ -111,7 +111,7 @@ export default function ColorPicker({ readme }: Props) {
 
   return (
     <>
-      <MCHEAD title={title} description={description} />
+      <MCHead title={title} description={description} />
       <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
         <div className="flex flex-col md:w-full lg:w-1/3 justify-center items-start pt-12 pb-12">
           <h1 className="uppercase tracking-loose">Color picker</h1>
@@ -152,9 +152,6 @@ export default function ColorPicker({ readme }: Props) {
       <div className="container mx-auto pt-12 md:pt-2 px-6">
         <MD {...readme[0]} />
       </div>
-      {/* <div className="flex flex-col md:w-full justify-start items-start md:pt-12 md:pb-24 sm:pt-6">
-        <MD {...readme[0]} />
-      </div> */}
     </>
   );
 }
@@ -162,23 +159,13 @@ export default function ColorPicker({ readme }: Props) {
 export async function getStaticProps() {
   // get list of files from the posts folder
   const files = fs.readdirSync("readme");
-
-  // get frontmatter & slug from each post
-  const readme = files.map((fileName) => {
-    const slug = fileName.replace(".md", "");
-    const readFile = fs.readFileSync(`readme/${fileName}`, "utf-8");
-    const { data: frontmatter, content } = matter(readFile);
-
-    return {
-      content,
-      frontmatter,
-    };
-  });
+  const readFile = fs.readFileSync(`readme/colorpicker.md`, "utf-8");
+  const { data: frontmatter, content } = matter(readFile);
 
   // Return the pages static props
   return {
     props: {
-      readme,
+      readme: [{ frontmatter, content }],
     },
   };
 }

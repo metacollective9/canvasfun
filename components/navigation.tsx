@@ -27,6 +27,11 @@ export default function Navigation() {
               </Link>
             </li>
             <li className="mr-3">
+              <Link href="/jsontoxlsx" className="inline-block py-2 px-4 text-black no-underline font-medium">
+                JSON to XLSX
+              </Link>
+            </li>
+            <li className="mr-3">
               <Link href="/posts" className="inline-block py-2 px-4 text-black no-underline font-medium">
                 Posts
               </Link>

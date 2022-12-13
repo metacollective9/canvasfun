@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
 import useSWR from "swr";
-import MCHEAD from "../components/head";
+import MCHead from "../components/head";
 import { POST, post } from "../components/post";
 import Loading from "../components/loading";
 
@@ -22,11 +21,11 @@ export default function Blogs() {
 
   return (
     <>
-      <MCHEAD title={title} description={description} />
+      <MCHead title={title} description={description} />
       <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
-        <div className="flex flex-col w-full justify-center items-center pt-12 pb-12">
+        <div className="flex flex-col w-full justify-center items-center pt-6 pb-12">
           <section className="">
-            <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-6 lg:px-6">
+            <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-3 lg:px-6">
               <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
                 <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
                   POSTS

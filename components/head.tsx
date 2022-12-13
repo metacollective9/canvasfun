@@ -5,7 +5,7 @@ type Props = {
   description?: string;
 };
 
-export default function MCHEAD({ title = "Meta Collective Tools", description= "Meta Collective Tools" }: Props) {
+export default function MCHead({ title = "Meta Collective Tools", description= "Meta Collective Tools" }: Props) {
   return (
     <Head>
         <title>{title}</title>
