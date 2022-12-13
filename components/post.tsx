@@ -17,10 +17,10 @@ export function POST({ ...post }: post) {
         <span className="text-sm">{post.readtime}</span>
       </div>
       <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        <a href={post.url} target="_blank">{post.title}</a>
+        <a href={post.url} target="_blank" title={post.title}>{post.title}</a>
       </h2>
       <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
-        <a href={post.url} target="_blank">
+        <a href={post.url} target="_blank" title={post.title}>
           {post.description}
         </a>
       </p>
@@ -29,12 +29,13 @@ export function POST({ ...post }: post) {
           <img
             className="w-7 h-7 rounded-full"
             src={post.image}
-            alt="Jese Leos avatar"
+            alt={post.title}
           />
         </div>
         <a
           href={post.url}
           target="_blank"
+          title={post.title}
           className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
         >
           Read more
