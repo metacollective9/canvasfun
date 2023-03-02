@@ -7,52 +7,64 @@ export type post = {
   image: string;
 };
 
+import Image from "next/image";
+import Link from "next/link";
+import { cx } from "../utils/all";
+import { PhotoIcon } from "@heroicons/react/24/outline";
+import Label from "./ui/label";
+
 export function POST({ ...post }: post) {
   return (
-    <article className="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <div className="flex justify-between items-center mb-5 text-gray-500">
-        <span className="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
-          {post.tag}
-        </span>
-        <span className="text-sm">{post.readtime}</span>
-      </div>
-      <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        <a href={post.url} target="_blank" title={post.title}>{post.title}</a>
-      </h2>
-      <p className="mb-5 font-light text-gray-500 dark:text-gray-400">
-        <a href={post.url} target="_blank" title={post.title}>
-          {post.description}
-        </a>
-      </p>
-      <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-4">
-          <img
-            className="w-7 h-7 rounded-full"
-            src={post.image}
-            alt={post.title}
-          />
+    <>
+      <div className="cursor-pointer link-effect">
+        <div
+          className={cx(
+            "relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800   hover:scale-105", "aspect-video"
+          )}>
+          <a href={post.url} target="_blank">
+              {post?.image ? (
+                <Image
+                  src={post?.image}
+                  loader={() => post?.image} 
+                  blurDataURL={post?.image}
+                  alt={"Thumbnail"}
+                  placeholder="blur"
+                  unoptimized={true}
+                  fill={true}
+                  className="transition-all"
+                />
+              ) : (
+                <span className="absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+                  <PhotoIcon />
+                </span>
+              )}
+          </a>
         </div>
-        <a
-          href={post.url}
-          target="_blank"
-          title={post.title}
-          className="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline"
-        >
-          Read more
-          <svg
-            className="ml-2 w-4 h-4"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </a>
+        <Label color="pink">{post.tag}</Label>
+        <h2 className="mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white">
+          <Link href={post.url}>
+            <span className="link-underline link-underline-blue">
+              {post.title}
+            </span>
+          </Link>
+        </h2>
+
+        <div>
+          {post.description && (
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-3">
+              <Link href={post.url}>
+                {post.description}
+              </Link>
+            </p>
+          )}
+        </div>
+
+        <div className="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
+          <span className="text-xs text-gray-300 dark:text-gray-600">
+            &bull;
+          </span>
+        </div>
       </div>
-    </article>
+    </>
   );
 }

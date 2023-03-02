@@ -5,6 +5,8 @@ import fs from "fs";
 import matter from "gray-matter";
 import MD from "../components/md";
 import MCHead from "../components/head";
+import { NextSeo } from "next-seo";
+import Container from "../components/container";
 
 type Props = {
   readme?: any;
@@ -111,17 +113,36 @@ export default function ColorPicker({ readme }: Props) {
 
   return (
     <>
-      <MCHead title={title} description={description} />
-      <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
-        <div className="flex flex-col md:w-full lg:w-1/3 justify-center items-start pt-12 pb-12">
-          <h1 className="uppercase tracking-loose">Color picker</h1>
-          <h3 className="">Pick exact color of a pixel</h3>
-          <p className="leading-normal mb-4">
+      <NextSeo
+        title={`Blog — ${title}`}
+        description={description || ""}
+        canonical={"https://tools.meta-collective.co.uk/colorpicker"}
+        openGraph={{
+          url: "https://tools.meta-collective.co.uk/colorpicker",
+          title: `Blog — ${title}`,
+          description: description || "",
+          images: [
+            {
+              url: "",
+              width: 800,
+              height: 600,
+              alt: "",
+            },
+          ],
+          site_name: "Web3Forms",
+        }}
+        twitter={{
+          cardType: "summary_large_image",
+        }}
+      />
+      <Container>
+        <h1 className="text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
+          Color picker
+        </h1>
+        <div className="grid text-center content-center">
+          <p className="mt-2 text-lg">
             Simply upload an image and start picking
           </p>
-          <label htmlFor="image" className="invisible">
-            {" "}
-          </label>
           <input
             type="file"
             className="bg-transparent hover:bg-slate-900 text-gray-900 hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-gray-900 hover:border-transparent"
@@ -131,7 +152,7 @@ export default function ColorPicker({ readme }: Props) {
             onChange={(e: any) => setFile(e.target.files[0])}
           />
           {colour.length > 0 && (
-            <span
+            <div
               className="box-content mt-2 p-2 border-2"
               style={{ backgroundColor: colour }}
             >
@@ -139,7 +160,7 @@ export default function ColorPicker({ readme }: Props) {
                 {hexColour} <br />
                 HEX value of colour is copied in your clipboard
               </p>
-            </span>
+            </div>
           )}
         </div>
 
@@ -147,11 +168,9 @@ export default function ColorPicker({ readme }: Props) {
           {uploadingStatus && <Loading />}
           {!uploadingStatus && <canvas id="canvas"></canvas>}
         </div>
-      </div>
-      <hr />
-      <div className="container mx-auto pt-12 md:pt-2 px-6">
+        <hr />
         <MD {...readme[0]} />
-      </div>
+      </Container>
     </>
   );
 }

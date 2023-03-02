@@ -1,8 +1,9 @@
 import axios from "axios";
 import useSWR from "swr";
-import MCHead from "../components/head";
 import { POST, post } from "../components/post";
 import Loading from "../components/loading";
+import Container from "../components/container";
+import { NextSeo } from "next-seo";
 
 const title = "MetaCollective Blog Posts";
 const description = "Listing of MetaCollective blog posts";
@@ -21,28 +22,50 @@ export default function Blogs() {
 
   return (
     <>
-      <MCHead title={title} description={description} />
-      <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
-        <div className="flex flex-col w-full justify-center items-center pt-6 pb-12">
-          <section className="">
-            <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-3 lg:px-6">
-              <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
-                <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                  POSTS
-                </h2>
-                <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
-                  A collection of technical blog posts on various random topics
-                </p>
-              </div>
-              <div className="grid gap-8 lg:grid-cols-2">
-                {data.map((post: post) => (
-                  <POST {...post} key={post.title} />
-                ))}
-              </div>
+      {data && (
+        <>
+          <NextSeo
+            title={`Blog — ${title}`}
+            description={description || ""}
+            canonical={"https://tools.meta-collective.co.uk/"}
+            openGraph={{
+              url: "https://tools.meta-collective.co.uk/",
+              title: `Blog — ${title}`,
+              description: description || "",
+              images: [
+                {
+                  url: "",
+                  width: 800,
+                  height: 600,
+                  alt: ""
+                }
+              ],
+              site_name: "Web3Forms"
+            }}
+            twitter={{
+              cardType: "summary_large_image"
+            }}
+          />
+          <Container>
+            <h1 className="text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
+              Posts
+            </h1>
+            <div className="text-center">
+              <p className="mt-2 text-lg">
+                See all posts we have ever written.
+              </p>
             </div>
-          </section>
-        </div>
-      </div>
+            <div className="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3 ">
+              {data.map((post: post) => (
+                <POST
+                  key={post.title}
+                  {...post}
+                />
+              ))}
+            </div>
+          </Container>
+        </>
+      )}
     </>
   );
 }

@@ -1,3 +1,6 @@
+const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -5,14 +8,30 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        gray: colors.neutral
+      },
       fontFamily: {
-        Playfair: ["Playfair Display", "serif"],
-       },
-    },
+        // to change, update font in _document.js
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        stock: [defaultTheme.fontFamily.sans]
+      },
+      aspectRatio: {
+        "4/3": "4 / 3",
+        "3/2": "3 / 2",
+        "2/3": "2 / 3",
+        "9/16": "9 / 16"
+      }
+    }
+  },
+  variants: {
+    extend: {}
   },
   plugins: [
-    require('@tailwindcss/typography'),
-  ],
+    require("@tailwindcss/line-clamp"),
+    require("@tailwindcss/typography")
+  ]
 }

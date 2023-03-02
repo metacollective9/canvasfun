@@ -7,6 +7,8 @@ import ProcessingButton from "../components/processingButton";
 import MD from "../components/md";
 import fs from "fs";
 import matter from "gray-matter";
+import { NextSeo } from "next-seo";
+import Container from "../components/container";
 
 const title = "MetaCollective JSON to XLSX";
 const description = "Convert JSON data to XLSX";
@@ -81,51 +83,71 @@ export default function JSONtoXLSX({ readme }: Props) {
 
   return (
     <>
-      <MCHead title={title} description={description} />
-      <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
-        <div className="flex flex-col w-full justify-center items-center pt-6 pb-12">
-          {showMessage && <Alert {...message} />}
-          <section>
-            <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-3 lg:px-6">
-              <div className="mx-auto max-w-screen-sm text-center lg:mb-8 mb-4">
-                <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-                  JSON to XLSX
-                </h2>
-                <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
+      {/* <MCHead title={title} description={description} /> */}
+      <NextSeo
+        title={`Blog — ${title}`}
+        description={description || ""}
+        canonical={"https://tools.meta-collective.co.uk/jsontoxlsx"}
+        openGraph={{
+          url: "https://tools.meta-collective.co.uk/jsontoxlsx",
+          title: `Blog — ${title}`,
+          description: description || "",
+          images: [
+            {
+              url: "",
+              width: 800,
+              height: 600,
+              alt: "",
+            },
+          ],
+          site_name: "Web3Forms",
+        }}
+        twitter={{
+          cardType: "summary_large_image",
+        }}
+      />
+      <Container>
+        {showMessage && <Alert {...message} />}
+        <div className="container mx-auto flex flex-col md:flex-row items-center my-2 md:my-2">
+          <div className="px-4 mx-auto max-w-screen-xl lg:px-6">
+            <div className="mx-auto max-w-screen-sm text-center lg:mb-8 mb-4">
+              <h1 className="text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
+                JSON to XLSX
+              </h1>
+              <div className="text-center">
+                <p className="mt-2 text-lg">
                   Paste JSON data in the editor below and press the covert
                   button
                 </p>
               </div>
-              <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-3 lg:px-6">
-                <Editor
-                  height="60vh"
-                  width="50vw"
-                  theme="vs-dark"
-                  defaultLanguage="json"
-                  defaultValue={JSON.stringify(defaultValue)}
-                  onMount={handleEditorDidMount}
-                  onChange={onChange}
-                />
-              </div>
-              <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-2 lg:px-6">
-                {!processing && (
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-                    onClick={convertToXLSX}
-                  >
-                    Convert to XLSX
-                  </button>
-                )}
-                {processing && <ProcessingButton message="Processing..." />}
-              </div>
             </div>
-          </section>
+            <div className="px-4 mx-auto max-w-screen-xl lg:px-6">
+              <Editor
+                height="60vh"
+                width="50vw"
+                theme="vs-dark"
+                defaultLanguage="json"
+                defaultValue={JSON.stringify(defaultValue)}
+                onMount={handleEditorDidMount}
+                onChange={onChange}
+              />
+            </div>
+            <div className="py-4 px-4 mx-auto max-w-screen-xl lg:py-2 lg:px-6">
+              {!processing && (
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+                  onClick={convertToXLSX}
+                >
+                  Convert to XLSX
+                </button>
+              )}
+              {processing && <ProcessingButton message="Processing..." />}
+            </div>
+          </div>
         </div>
-      </div>
-      <hr />
-      <div className="container mx-auto pt-12 md:pt-2 px-6">
+        <hr />
         <MD {...readme[0]} />
-      </div>
+      </Container>
     </>
   );
 }
